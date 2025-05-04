@@ -105,7 +105,7 @@ export function NotificationsDropdown() {
           {hasUnread && <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-80">
+      <DropdownMenuContent align="end" className="w-[95vw] sm:w-80">
         <div className="flex items-center justify-between p-4">
           <DropdownMenuLabel className="font-semibold text-lg">Notifications</DropdownMenuLabel>
           <Button variant="ghost" size="sm" onClick={markAllAsRead} disabled={!hasUnread}>

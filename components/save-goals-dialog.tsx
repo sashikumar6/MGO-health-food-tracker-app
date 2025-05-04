@@ -46,7 +46,7 @@ export function SaveGoalsDialog({ open, onOpenChange, currentGoals, onSaveGoals 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="w-[95vw] max-w-lg">
         <DialogHeader>
           <DialogTitle>Update Nutrition Goals</DialogTitle>
           <DialogDescription>Set your daily nutrition targets to help you reach your health goals.</DialogDescription>
@@ -142,11 +142,15 @@ export function SaveGoalsDialog({ open, onOpenChange, currentGoals, onSaveGoals 
           </div>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+        <DialogFooter className="flex flex-col sm:flex-row gap-2">
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="w-full sm:w-auto">
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={saving} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button
+            onClick={handleSave}
+            disabled={saving}
+            className="bg-emerald-600 hover:bg-emerald-700 w-full sm:w-auto"
+          >
             {saving ? "Saving..." : "Save Changes"}
           </Button>
         </DialogFooter>

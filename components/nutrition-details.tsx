@@ -40,18 +40,20 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Nutrition Details</DialogTitle>
           <DialogDescription>Detailed breakdown of your daily nutrition</DialogDescription>
         </DialogHeader>
 
         <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="mt-4">
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="macros">Macronutrients</TabsTrigger>
-            <TabsTrigger value="meals">Meals</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto pb-2">
+            <TabsList className="w-full sm:w-auto">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="macros">Macronutrients</TabsTrigger>
+              <TabsTrigger value="meals">Meals</TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="overview" className="space-y-4">
             <Card>
@@ -106,7 +108,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                     </div>
                     <div className="flex justify-between">
                       <span>Protein</span>
-                      <span className="font-medium">{Math.max(0, 120 - nutritionData.प्रोटीन)} g</span>
+                      <span className="font-medium">{Math.max(0, 120 - nutritionData.protein)} g</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Fiber</span>
@@ -121,7 +123,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                   <CardTitle className="text-lg">Macro Ratio</CardTitle>
                   <CardDescription>Current macronutrient distribution</CardDescription>
                 </CardHeader>
-                <CardContent className="flex justify-center">
+                <CardContent className="flex flex-col sm:flex-row justify-center items-center">
                   <div className="w-32 h-32">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
@@ -142,7 +144,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
-                  <div className="ml-4 flex flex-col justify-center">
+                  <div className="mt-4 sm:mt-0 sm:ml-4 flex flex-col justify-center">
                     {macroData.map((entry) => (
                       <div key={entry.name} className="flex items-center mb-1">
                         <div className="w-3 h-3 mr-2" style={{ backgroundColor: entry.color }}></div>
@@ -225,14 +227,14 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                   <div className="space-y-4">
                     {mealData.map((meal, index) => (
                       <div key={index} className="border rounded-lg p-4">
-                        <div className="flex justify-between items-start">
+                        <div className="flex flex-col sm:flex-row justify-between items-start">
                           <div>
                             <h4 className="font-medium">{meal.name}</h4>
                             <p className="text-sm text-muted-foreground">
                               {meal.restaurant} • {meal.time}
                             </p>
                           </div>
-                          <div className="text-right">
+                          <div className="text-right mt-2 sm:mt-0">
                             <div className="font-medium">{meal.calories} kcal</div>
                             {meal.protein && (
                               <div className="text-sm text-muted-foreground">{meal.protein}g protein</div>

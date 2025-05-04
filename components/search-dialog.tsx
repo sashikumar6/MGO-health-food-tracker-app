@@ -107,7 +107,7 @@ export function SearchDialog({ open, onOpenChange }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px] p-0">
+      <DialogContent className="w-[95vw] max-w-lg p-0">
         <div className="flex items-center border-b p-4">
           <Search className="h-5 w-5 text-muted-foreground mr-2 flex-shrink-0" />
           <Input
@@ -187,7 +187,7 @@ export function SearchDialog({ open, onOpenChange }) {
 
               <div>
                 <h3 className="font-medium mb-2">Suggested Restaurants</h3>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {sampleData.restaurants.slice(0, 4).map((restaurant) => (
                     <Link
                       key={restaurant.id}
