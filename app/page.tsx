@@ -6,24 +6,14 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Utensils, Apple, Salad, TrendingUp, Search, Plus, Check, ChevronRight, Save } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Utensils, Apple, TrendingUp, Plus, Check, ChevronRight, Save } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { Toaster } from "@/components/ui/toaster"
 import { NutritionDetails } from "@/components/nutrition-details"
 import { SaveGoalsDialog } from "@/components/save-goals-dialog"
 import { SearchDialog } from "@/components/search-dialog"
-import { NotificationsDropdown } from "@/components/notifications-dropdown"
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer"
 import { loadUserGoals, saveMealToSupabase, saveGoalsToSupabase, getDailyNutritionTotals } from "@/lib/supabase"
 
 export default function Home() {
@@ -241,10 +231,10 @@ export default function Home() {
       name: formData.get("meal-name"),
       restaurant: formData.get("restaurant"),
       calories: Number.parseInt(formData.get("calories")),
-      protein: Number.parseInt(formData.get("protein" || "0")),
-      carbs: Number.parseInt(formData.get("carbs" || "0")),
-      fat: Number.parseInt(formData.get("fat" || "0")),
-      fiber: Number.parseInt(formData.get("fiber" || "0")),
+      protein: Number.parseInt(formData.get("protein") || "0"),
+      carbs: Number.parseInt(formData.get("carbs") || "0"),
+      fat: Number.parseInt(formData.get("fat") || "0"),
+      fiber: Number.parseInt(formData.get("fiber") || "0"),
     }
 
     handleAddMeal(meal)
@@ -340,405 +330,255 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-emerald-50/20">
-      <header className="sticky top-0 z-10 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between py-4">
-          <div className="flex items-center gap-2">
-            <Salad className="h-6 w-6 text-emerald-500" />
-            <span className="text-xl font-bold">ElementEat</span>
-          </div>
-          <nav className="hidden md:flex gap-6">
-            <Link
-              href="/"
-              className="text-sm font-medium text-foreground relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-emerald-500"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/restaurants"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Restaurants
-            </Link>
-            <Link
-              href="/goals"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              My Goals
-            </Link>
-            <Link
-              href="/suggestions"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Suggestions
-            </Link>
-          </nav>
-          <div className="flex items-center gap-2">
-            <NotificationsDropdown />
-            <Button variant="ghost" size="icon" onClick={() => setSearchDialogOpen(true)}>
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <line x1="4" x2="20" y1="12" y2="12" />
-                <line x1="4" x2="20" y1="6" y2="6" />
-                <line x1="4" x2="20" y1="18" y2="18" />
-              </svg>
-            </Button>
-            <Dialog open={trackMealDialogOpen} onOpenChange={setTrackMealDialogOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  className="hidden md:flex bg-emerald-600 hover:bg-emerald-700 transition-colors"
-                  onClick={() => setTrackMealDialogOpen(true)}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Track Meal
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <form action={handleTrackCustomMeal}>
-                  <DialogHeader>
-                    <DialogTitle>Track a Meal</DialogTitle>
-                    <DialogDescription>Enter the details of your meal to add it to your daily log.</DialogDescription>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="meal-name" className="text-right">
-                        Meal
-                      </Label>
-                      <Input
-                        id="meal-name"
-                        name="meal-name"
-                        placeholder="e.g. Chicken Salad"
-                        className="col-span-3"
-                        required
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="restaurant" className="text-right">
-                        Restaurant
-                      </Label>
-                      <Input id="restaurant" name="restaurant" placeholder="e.g. Sweetgreen" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="calories" className="text-right">
-                        Calories
-                      </Label>
-                      <Input
-                        id="calories"
-                        name="calories"
-                        type="number"
-                        placeholder="e.g. 450"
-                        className="col-span-3"
-                        required
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="protein" className="text-right">
-                        Protein (g)
-                      </Label>
-                      <Input id="protein" name="protein" type="number" placeholder="e.g. 25" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="carbs" className="text-right">
-                        Carbs (g)
-                      </Label>
-                      <Input id="carbs" name="carbs" type="number" placeholder="e.g. 30" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="fat" className="text-right">
-                        Fat (g)
-                      </Label>
-                      <Input id="fat" name="fat" type="number" placeholder="e.g. 15" className="col-span-3" />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="fiber" className="text-right">
-                        Fiber (g)
-                      </Label>
-                      <Input id="fiber" name="fiber" type="number" placeholder="e.g. 8" className="col-span-3" />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700">
-                      Add to Tracker
-                    </Button>
-                  </DialogFooter>
-                </form>
-              </DialogContent>
-            </Dialog>
-          </div>
-        </div>
-      </header>
-      <main className="flex-1">
-        <section className="container px-4 sm:px-6 py-6 md:py-10">
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="overflow-hidden border-2 border-emerald-100 shadow-md">
-              <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <span className="inline-block p-2 rounded-full bg-emerald-100">
-                    <TrendingUp className="h-4 w-4 text-emerald-600" />
-                  </span>
-                  Today's Summary
-                </CardTitle>
-                <CardDescription>Your nutrition progress for today</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Calories</span>
-                    <span className="text-sm text-muted-foreground">
-                      {calories.toLocaleString()} / {nutritionGoals.calorieGoal.toLocaleString()} kcal
+      <SiteHeader currentPath="/" onSearchClick={() => setSearchDialogOpen(true)} />
+
+      <main className="flex-1 w-full overflow-x-hidden">
+        <section className="w-full py-6 md:py-10">
+          <div className="container px-4 sm:px-6">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="overflow-hidden border-2 border-emerald-100 shadow-md w-full">
+                <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <span className="inline-block p-2 rounded-full bg-emerald-100">
+                      <TrendingUp className="h-4 w-4 text-emerald-600" />
                     </span>
-                  </div>
-                  <Progress
-                    value={(calories / nutritionGoals.calorieGoal) * 100}
-                    className="h-2 bg-muted"
-                    indicatorClassName="bg-emerald-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Protein</span>
-                    <span className="text-sm text-muted-foreground">
-                      {protein} / {nutritionGoals.proteinGoal} g
-                    </span>
-                  </div>
-                  <Progress
-                    value={(protein / nutritionGoals.proteinGoal) * 100}
-                    className="h-2 bg-muted"
-                    indicatorClassName="bg-blue-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Fiber</span>
-                    <span className="text-sm font-medium">
-                      {fiber} / {nutritionGoals.fiberGoal} g
-                    </span>
-                  </div>
-                  <Progress
-                    value={(fiber / nutritionGoals.fiberGoal) * 100}
-                    className="h-2 bg-muted"
-                    indicatorClassName="bg-amber-500"
-                  />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full group" onClick={() => setDetailsDialogOpen(true)}>
-                  View Details
-                  <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="overflow-hidden border-2 border-emerald-100 shadow-md">
-              <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <span className="inline-block p-2 rounded-full bg-emerald-100">
-                    <Utensils className="h-4 w-4 text-emerald-600" />
-                  </span>
-                  Meal Suggestions
-                </CardTitle>
-                <CardDescription>Based on your remaining goals</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {suggestions.map((suggestion) => (
-                  <div
-                    key={suggestion.id}
-                    className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="rounded-md bg-muted p-2">
-                      <Utensils className="h-4 w-4 text-emerald-500" />
+                    Today's Summary
+                  </CardTitle>
+                  <CardDescription>Your nutrition progress for today</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Calories</span>
+                      <span className="text-sm text-muted-foreground">
+                        {calories.toLocaleString()} / {nutritionGoals.calorieGoal.toLocaleString()} kcal
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-sm font-medium">{suggestion.name}</h4>
-                      <p className="text-xs text-muted-foreground">
-                        {suggestion.restaurant} • {suggestion.calories} kcal • {suggestion.protein}g protein
-                      </p>
-                    </div>
-                    <Button
-                      variant={suggestion.added ? "outline" : "default"}
-                      size="sm"
-                      className={suggestion.added ? "pointer-events-none" : "bg-emerald-600 hover:bg-emerald-700"}
-                      onClick={() => handleAddSuggestion(suggestion.id)}
-                      disabled={suggestion.added}
-                    >
-                      {suggestion.added ? (
-                        <>
-                          <Check className="h-3.5 w-3.5 mr-1" />
-                          Added
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="h-3.5 w-3.5 mr-1" />
-                          Add
-                        </>
-                      )}
-                    </Button>
+                    <Progress
+                      value={(calories / nutritionGoals.calorieGoal) * 100}
+                      className="h-2 bg-muted"
+                      indicatorClassName="bg-emerald-500"
+                    />
                   </div>
-                ))}
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full group" asChild>
-                  <Link href="/suggestions">
-                    View All Suggestions
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Protein</span>
+                      <span className="text-sm text-muted-foreground">
+                        {protein} / {nutritionGoals.proteinGoal} g
+                      </span>
+                    </div>
+                    <Progress
+                      value={(protein / nutritionGoals.proteinGoal) * 100}
+                      className="h-2 bg-muted"
+                      indicatorClassName="bg-blue-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">Fiber</span>
+                      <span className="text-sm font-medium">
+                        {fiber} / {nutritionGoals.fiberGoal} g
+                      </span>
+                    </div>
+                    <Progress
+                      value={(fiber / nutritionGoals.fiberGoal) * 100}
+                      className="h-2 bg-muted"
+                      indicatorClassName="bg-amber-500"
+                    />
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" className="w-full group" onClick={() => setDetailsDialogOpen(true)}>
+                    View Details
                     <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-              </CardFooter>
-            </Card>
-            <Card className="overflow-hidden border-2 border-emerald-100 shadow-md">
-              <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <span className="inline-block p-2 rounded-full bg-emerald-100">
-                    <Apple className="h-4 w-4 text-emerald-600" />
-                  </span>
-                  Recent Meals
-                </CardTitle>
-                <CardDescription>Your last tracked meals</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {recentMeals.map((meal) => (
-                  <div
-                    key={meal.id}
-                    className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="rounded-md bg-muted p-2">{meal.icon}</div>
-                    <div>
-                      <h4 className="text-sm font-medium">{meal.name}</h4>
-                      <p className="text-xs text-muted-foreground">
-                        {meal.restaurant} • {meal.time} • {meal.calories} kcal
-                      </p>
+                  </Button>
+                </CardFooter>
+              </Card>
+              <Card className="overflow-hidden border-2 border-emerald-100 shadow-md w-full">
+                <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <span className="inline-block p-2 rounded-full bg-emerald-100">
+                      <Utensils className="h-4 w-4 text-emerald-600" />
+                    </span>
+                    Meal Suggestions
+                  </CardTitle>
+                  <CardDescription>Based on your remaining goals</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {suggestions.map((suggestion) => (
+                    <div
+                      key={suggestion.id}
+                      className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="rounded-md bg-muted p-2">
+                        <Utensils className="h-4 w-4 text-emerald-500" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-medium">{suggestion.name}</h4>
+                        <p className="text-xs text-muted-foreground">
+                          {suggestion.restaurant} • {suggestion.calories} kcal • {suggestion.protein}g protein
+                        </p>
+                      </div>
+                      <Button
+                        variant={suggestion.added ? "outline" : "default"}
+                        size="sm"
+                        className={suggestion.added ? "pointer-events-none" : "bg-emerald-600 hover:bg-emerald-700"}
+                        onClick={() => handleAddSuggestion(suggestion.id)}
+                        disabled={suggestion.added}
+                      >
+                        {suggestion.added ? (
+                          <>
+                            <Check className="h-3.5 w-3.5 mr-1" />
+                            Added
+                          </>
+                        ) : (
+                          <>
+                            <Plus className="h-3.5 w-3.5 mr-1" />
+                            Add
+                          </>
+                        )}
+                      </Button>
                     </div>
-                  </div>
-                ))}
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full group" onClick={() => setDetailsDialogOpen(true)}>
-                  View All Meals
-                  <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </CardFooter>
-            </Card>
+                  ))}
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" className="w-full group" asChild>
+                    <Link href="/suggestions">
+                      View All Suggestions
+                      <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+              <Card className="overflow-hidden border-2 border-emerald-100 shadow-md w-full">
+                <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <span className="inline-block p-2 rounded-full bg-emerald-100">
+                      <Apple className="h-4 w-4 text-emerald-600" />
+                    </span>
+                    Recent Meals
+                  </CardTitle>
+                  <CardDescription>Your last tracked meals</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {recentMeals.map((meal) => (
+                    <div
+                      key={meal.id}
+                      className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="rounded-md bg-muted p-2">{meal.icon}</div>
+                      <div>
+                        <h4 className="text-sm font-medium">{meal.name}</h4>
+                        <p className="text-xs text-muted-foreground">
+                          {meal.restaurant} • {meal.time} • {meal.calories} kcal
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" className="w-full group" onClick={() => setDetailsDialogOpen(true)}>
+                    View All Meals
+                    <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
           </div>
         </section>
-        <section className="container px-4 sm:px-6 py-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold flex items-center">
-              <span className="inline-block p-1.5 mr-2 rounded-full bg-emerald-100">
-                <Utensils className="h-5 w-5 text-emerald-600" />
-              </span>
-              Popular Restaurants
-            </h2>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                className="flex items-center gap-2"
-                onClick={refreshData}
-                disabled={isRefreshing}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+        <section className="w-full py-6">
+          <div className="container px-4 sm:px-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+              <h2 className="text-2xl font-bold flex items-center">
+                <span className="inline-block p-1.5 mr-2 rounded-full bg-emerald-100">
+                  <Utensils className="h-5 w-5 text-emerald-600" />
+                </span>
+                Popular Restaurants
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="flex items-center gap-2 w-full sm:w-auto"
+                  onClick={refreshData}
+                  disabled={isRefreshing}
                 >
-                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                  <path d="M3 3v5h5" />
-                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-                  <path d="M16 21h5v-5" />
-                </svg>
-                {isRefreshing ? "Refreshing..." : "Refresh"}
-              </Button>
-              <Button
-                className="bg-emerald-600 hover:bg-emerald-700 flex items-center gap-2"
-                onClick={() => setGoalsDialogOpen(true)}
-              >
-                <Save className="h-4 w-4" />
-                Save Goals
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+                  >
+                    <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 3v5h5" />
+                    <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+                    <path d="M16 21h5v-5" />
+                  </svg>
+                  {isRefreshing ? "Refreshing..." : "Refresh"}
+                </Button>
+                <Button
+                  className="bg-emerald-600 hover:bg-emerald-700 flex items-center gap-2 w-full sm:w-auto"
+                  onClick={() => setGoalsDialogOpen(true)}
+                >
+                  <Save className="h-4 w-4" />
+                  Save Goals
+                </Button>
+              </div>
+            </div>
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {[
+                { name: "Sweetgreen", dishes: 42, image: "/images/live-well-exterior.png" },
+                { name: "Chipotle", dishes: 38, image: "/images/restaurant-bar.png" },
+                { name: "Panera Bread", dishes: 56, image: "/images/restaurant-interior.png" },
+                { name: "Chopt", dishes: 31, image: "/images/waterfront-dining.png" },
+              ].map((restaurant) => (
+                <Link
+                  href={`/restaurants/${restaurant.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  key={restaurant.name}
+                  className="group"
+                >
+                  <Card className="overflow-hidden hover:shadow-md transition-all duration-300 group-hover:border-emerald-200 group-hover:-translate-y-1 w-full">
+                    <div className="relative h-32 overflow-hidden">
+                      <Image
+                        src={restaurant.image || "/placeholder.svg"}
+                        alt={restaurant.name}
+                        width={200}
+                        height={100}
+                        className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700">
+                          View Menu
+                        </Button>
+                      </div>
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="font-medium">{restaurant.name}</h3>
+                      <p className="text-sm text-muted-foreground">{restaurant.dishes} dishes</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+            <div className="flex justify-center mt-6">
+              <Button variant="outline" className="group" asChild>
+                <Link href="/restaurants">
+                  View All Restaurants
+                  <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
+                </Link>
               </Button>
             </div>
           </div>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {[
-              { name: "Sweetgreen", dishes: 42, image: "/images/live-well-exterior.png" },
-              { name: "Chipotle", dishes: 38, image: "/images/restaurant-bar.png" },
-              { name: "Panera Bread", dishes: 56, image: "/images/restaurant-interior.png" },
-              { name: "Chopt", dishes: 31, image: "/images/waterfront-dining.png" },
-            ].map((restaurant) => (
-              <Link
-                href={`/restaurants/${restaurant.name.toLowerCase().replace(/\s+/g, "-")}`}
-                key={restaurant.name}
-                className="group"
-              >
-                <Card className="overflow-hidden hover:shadow-md transition-all duration-300 group-hover:border-emerald-200 group-hover:-translate-y-1">
-                  <div className="relative h-32 overflow-hidden">
-                    <Image
-                      src={restaurant.image || "/placeholder.svg"}
-                      alt={restaurant.name}
-                      width={200}
-                      height={100}
-                      className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700">
-                        View Menu
-                      </Button>
-                    </div>
-                  </div>
-                  <CardContent className="p-4">
-                    <h3 className="font-medium">{restaurant.name}</h3>
-                    <p className="text-sm text-muted-foreground">{restaurant.dishes} dishes</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-          <div className="flex justify-center mt-6">
-            <Button variant="outline" className="group" asChild>
-              <Link href="/restaurants">
-                View All Restaurants
-                <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </div>
         </section>
       </main>
-      <footer className="border-t py-6 md:py-0 bg-gradient-to-b from-transparent to-emerald-50/30">
-        <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <div className="flex items-center gap-2">
-            <Salad className="h-5 w-5 text-emerald-500" />
-            <p className="text-sm text-muted-foreground">© 2023 ElementEats. All rights reserved.</p>
-          </div>
-          <div className="flex gap-4">
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Terms
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Privacy
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
-          </div>
-        </div>
-      </footer>
+
+      <SiteFooter />
 
       {/* Nutrition Details Dialog */}
       <NutritionDetails
