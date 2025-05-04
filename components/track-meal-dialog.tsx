@@ -72,27 +72,33 @@ export function TrackMealDialog({ className, variant = "default", children, onMe
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="w-[95vw] sm:max-w-[425px]">
         <form onSubmit={handleTrackCustomMeal}>
           <DialogHeader>
             <DialogTitle>Track a Meal</DialogTitle>
             <DialogDescription>Enter the details of your meal to add it to your daily log.</DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="meal-name" className="text-right">
+          <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="meal-name" className="sm:text-right">
                 Meal
               </Label>
-              <Input id="meal-name" name="meal-name" placeholder="e.g. Chicken Salad" className="col-span-3" required />
+              <Input
+                id="meal-name"
+                name="meal-name"
+                placeholder="e.g. Chicken Salad"
+                className="sm:col-span-3"
+                required
+              />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="restaurant" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="restaurant" className="sm:text-right">
                 Restaurant
               </Label>
-              <Input id="restaurant" name="restaurant" placeholder="e.g. Sweetgreen" className="col-span-3" />
+              <Input id="restaurant" name="restaurant" placeholder="e.g. Sweetgreen" className="sm:col-span-3" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="calories" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="calories" className="sm:text-right">
                 Calories
               </Label>
               <Input
@@ -100,33 +106,33 @@ export function TrackMealDialog({ className, variant = "default", children, onMe
                 name="calories"
                 type="number"
                 placeholder="e.g. 450"
-                className="col-span-3"
+                className="sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="protein" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="protein" className="sm:text-right">
                 Protein (g)
               </Label>
-              <Input id="protein" name="protein" type="number" placeholder="e.g. 25" className="col-span-3" />
+              <Input id="protein" name="protein" type="number" placeholder="e.g. 25" className="sm:col-span-3" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="carbs" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="carbs" className="sm:text-right">
                 Carbs (g)
               </Label>
-              <Input id="carbs" name="carbs" type="number" placeholder="e.g. 30" className="col-span-3" />
+              <Input id="carbs" name="carbs" type="number" placeholder="e.g. 30" className="sm:col-span-3" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fat" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="fat" className="sm:text-right">
                 Fat (g)
               </Label>
-              <Input id="fat" name="fat" type="number" placeholder="e.g. 15" className="col-span-3" />
+              <Input id="fat" name="fat" type="number" placeholder="e.g. 15" className="sm:col-span-3" />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fiber" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
+              <Label htmlFor="fiber" className="sm:text-right">
                 Fiber (g)
               </Label>
-              <Input id="fiber" name="fiber" type="number" placeholder="e.g. 8" className="col-span-3" />
+              <Input id="fiber" name="fiber" type="number" placeholder="e.g. 8" className="sm:col-span-3" />
             </div>
           </div>
           <DialogFooter>

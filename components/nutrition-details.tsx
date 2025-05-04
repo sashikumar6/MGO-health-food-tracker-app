@@ -40,7 +40,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-[95vw] sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Nutrition Details</DialogTitle>
           <DialogDescription>Detailed breakdown of your daily nutrition</DialogDescription>
@@ -92,7 +92,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg">Remaining</CardTitle>
@@ -106,7 +106,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                     </div>
                     <div className="flex justify-between">
                       <span>Protein</span>
-                      <span className="font-medium">{Math.max(0, 120 - nutritionData.protein)} g</span>
+                      <span className="font-medium">{Math.max(0, 120 - nutritionData.प्रोटीन)} g</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Fiber</span>
@@ -164,7 +164,7 @@ export function NutritionDetails({ open, onOpenChange, nutritionData }) {
                 <CardDescription>Detailed view of your macronutrient intake</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="h-[300px] w-full">
+                <div className="h-[250px] sm:h-[300px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={nutrientData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                       <XAxis dataKey="name" />

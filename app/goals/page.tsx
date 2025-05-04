@@ -203,14 +203,14 @@ export default function GoalsPage() {
         </div>
       </header>
       <main className="flex-1">
-        <div className="container py-6 md:py-10">
+        <div className="container px-4 sm:px-6 py-6 md:py-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold">My Nutrition Goals</h1>
               <p className="text-muted-foreground">Set and track your daily nutrition targets</p>
             </div>
             <Button
-              className="bg-emerald-600 hover:bg-emerald-700 transition-all"
+              className="w-full md:w-auto bg-emerald-600 hover:bg-emerald-700 transition-all"
               onClick={handleSaveGoals}
               disabled={isSaving}
             >
@@ -275,7 +275,7 @@ export default function GoalsPage() {
                         </select>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="weight">Weight (kg)</Label>
                           <Input
@@ -298,7 +298,7 @@ export default function GoalsPage() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="age">Age</Label>
                           <Input

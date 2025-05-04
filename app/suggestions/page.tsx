@@ -284,7 +284,7 @@ export default function SuggestionsPage() {
         </div>
       </header>
       <main className="flex-1">
-        <div className="container py-6 md:py-10">
+        <div className="container px-4 sm:px-6 py-6 md:py-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold">Meal Suggestions</h1>
@@ -319,7 +319,7 @@ export default function SuggestionsPage() {
                     <CardDescription>{suggestion.description}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid gap-6 md:grid-cols-3">
+                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                       {suggestion.restaurants.map((item) => (
                         <div
                           key={`${suggestion.id}-${item.id}`}
@@ -626,7 +626,7 @@ export default function SuggestionsPage() {
 
           <div className="mt-10">
             <h2 className="text-2xl font-bold mb-6">Based on Your Recent Meals</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <Card className="overflow-hidden border-2 border-emerald-100 shadow-md hover:shadow-lg transition-all">
                 <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
                   <CardTitle className="text-lg">Complete Your Protein Goal</CardTitle>

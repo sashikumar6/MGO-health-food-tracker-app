@@ -166,14 +166,14 @@ export default function RestaurantsPage() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="container py-6 md:py-10">
+        <section className="container px-4 sm:px-6 py-6 md:py-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold">Restaurants</h1>
               <p className="text-muted-foreground">Find healthy options at your favorite restaurants</p>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="relative">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
+              <div className="relative w-full sm:w-auto">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
@@ -183,7 +183,7 @@ export default function RestaurantsPage() {
                   readOnly
                 />
               </div>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" className="mt-2 sm:mt-0">
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
@@ -196,7 +196,7 @@ export default function RestaurantsPage() {
               <TabsTrigger value="healthy">Healthiest</TabsTrigger>
             </TabsList>
             <TabsContent value="all" className="mt-6">
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {restaurants.map((restaurant) => (
                   <Link href={`/restaurants/${restaurant.id}`} key={restaurant.id}>
                     <Card className="overflow-hidden hover:shadow-md transition-shadow">

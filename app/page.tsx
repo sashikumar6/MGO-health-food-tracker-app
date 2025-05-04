@@ -241,10 +241,10 @@ export default function Home() {
       name: formData.get("meal-name"),
       restaurant: formData.get("restaurant"),
       calories: Number.parseInt(formData.get("calories")),
-      protein: Number.parseInt(formData.get("protein") || "0"),
-      carbs: Number.parseInt(formData.get("carbs") || "0"),
-      fat: Number.parseInt(formData.get("fat") || "0"),
-      fiber: Number.parseInt(formData.get("fiber") || "0"),
+      protein: Number.parseInt(formData.get("protein" || "0")),
+      carbs: Number.parseInt(formData.get("carbs" || "0")),
+      fat: Number.parseInt(formData.get("fat" || "0")),
+      fiber: Number.parseInt(formData.get("fiber" || "0")),
     }
 
     handleAddMeal(meal)
@@ -480,8 +480,8 @@ export default function Home() {
         </div>
       </header>
       <main className="flex-1">
-        <section className="container py-6 md:py-10">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <section className="container px-4 sm:px-6 py-6 md:py-10">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <Card className="overflow-hidden border-2 border-emerald-100 shadow-md">
               <CardHeader className="pb-2 bg-gradient-to-r from-emerald-50 to-transparent">
                 <CardTitle className="text-lg flex items-center gap-2">
@@ -522,7 +522,7 @@ export default function Home() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Fiber</span>
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm font-medium">
                       {fiber} / {nutritionGoals.fiberGoal} g
                     </span>
                   </div>
@@ -631,7 +631,7 @@ export default function Home() {
             </Card>
           </div>
         </section>
-        <section className="container py-6">
+        <section className="container px-4 sm:px-6 py-6">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold flex items-center">
               <span className="inline-block p-1.5 mr-2 rounded-full bg-emerald-100">
@@ -674,7 +674,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {[
               { name: "Sweetgreen", dishes: 42, image: "/images/live-well-exterior.png" },
               { name: "Chipotle", dishes: 38, image: "/images/restaurant-bar.png" },

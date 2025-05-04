@@ -235,7 +235,7 @@ export default function RestaurantPage({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
-        <div className="container py-6">
+        <div className="container px-4 sm:px-6 py-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
               <p className="mt-4 text-muted-foreground">{restaurant.description}</p>
@@ -255,7 +255,7 @@ export default function RestaurantPage({ params }: { params: { id: string } }) {
               <TabsTrigger value="reviews">Reviews</TabsTrigger>
             </TabsList>
             <TabsContent value="menu" className="mt-6">
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {restaurant.dishes.map((dish) => (
                   <Card
                     key={dish.id}
@@ -327,7 +327,7 @@ export default function RestaurantPage({ params }: { params: { id: string } }) {
               </div>
             </TabsContent>
             <TabsContent value="nutrition" className="mt-6">
-              <div className="grid gap-6 md:grid-cols-2">
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
                 {restaurant.dishes.map((dish) => (
                   <Card key={`nutrition-${dish.id}`} className="overflow-hidden border border-muted">
                     <CardHeader className="p-4 pb-2">
