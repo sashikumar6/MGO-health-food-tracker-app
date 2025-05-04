@@ -7,12 +7,41 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 // Create a singleton instance of the Supabase client
 let supabaseInstance = null
 
+// Add this function to the supabase.ts file to ensure we're always using a demo user
+export function getCurrentUser() {
+  // Always return a demo user without authentication
+  return {
+    id: "demo-user",
+    email: "demo@example.com",
+    name: "Demo User",
+  }
+}
+
+// Modify the getSupabaseClient function to not check for authentication
 export function getSupabaseClient() {
   if (supabaseInstance) return supabaseInstance
 
+  // Create client even if keys are missing (for demo purposes)
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.warn("Supabase URL or Anon Key is missing. Database operations will not work.")
-    return null
+    console.warn("Supabase URL or Anon Key is missing. Using mock database operations.")
+    // Return a mock client that doesn't actually connect to Supabase
+    return {
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            single: () => Promise.resolve({ data: getMockUserData() }),
+            order: () => ({
+              limit: () => Promise.resolve({ data: getMockMealsData() }),
+            }),
+          }),
+          gte: () => ({
+            order: () => Promise.resolve({ data: getMockMealsData() }),
+          }),
+        }),
+        insert: () => Promise.resolve({ data: {}, error: null }),
+        update: () => Promise.resolve({ data: {}, error: null }),
+      }),
+    }
   }
 
   try {
@@ -22,6 +51,55 @@ export function getSupabaseClient() {
     console.error("Failed to initialize Supabase client:", error)
     return null
   }
+}
+
+// Add mock data functions
+function getMockUserData() {
+  return {
+    id: "demo-user",
+    user_id: "demo-user",
+    calorie_goal: 2000,
+    protein_goal: 120,
+    carb_goal: 250,
+    fat_goal: 65,
+    fiber_goal: 30,
+    water_goal: 2.5,
+    auto_calculate: false,
+    activity_level: "moderate",
+    weight: 70,
+    height: 170,
+    age: 30,
+    gender: "female",
+  }
+}
+
+function getMockMealsData() {
+  return [
+    {
+      id: 1,
+      user_id: "demo-user",
+      name: "Breakfast Sandwich",
+      restaurant: "Starbucks",
+      calories: 420,
+      protein: 18,
+      carbs: 40,
+      fat: 22,
+      fiber: 2,
+      created_at: new Date().toISOString(),
+    },
+    {
+      id: 2,
+      user_id: "demo-user",
+      name: "Chicken Caesar Salad",
+      restaurant: "Sweetgreen",
+      calories: 450,
+      protein: 30,
+      carbs: 20,
+      fat: 25,
+      fiber: 5,
+      created_at: new Date().toISOString(),
+    },
+  ]
 }
 
 // Helper function to save a meal to Supabase
